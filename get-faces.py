@@ -18,16 +18,14 @@ count = 0
 while True:
     ret, frame = cap.read()
     if ret == False: break
-    frame = imutils.resize(frame,width=300, height=360)
+    frame = imutils.resize(frame,width=380, height=420)
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     auxFrame = frame.copy()
 
-    faces = faceClassIf.detectMultiScale(gray,1.4,5)
-    print("faces",faces)
-    
+    faces = faceClassIf.detectMultiScale(gray,1.4,5)    
     for (x,y,w,h) in faces:
         
-        cv2.rectangle(frame, (x,y), (x+w,+h),(0,255,0),2)
+        cv2.rectangle(frame, (x,y), (x+w,y+h),(0,255,0),2)
         face2 = auxFrame[y:y+h,x:x+w]
         face = cv2.resize(face2,(150,150),interpolation=cv2.INTER_CUBIC)
         cv2.imwrite(personPath + '/rostro_{}.jpg'.format(count),face)
